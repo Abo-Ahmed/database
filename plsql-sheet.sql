@@ -1,6 +1,6 @@
 
 -- Oracle PL/SQL Quick Reference
-
+-- pl (procedural language)
 -- SELECT Statement
 SELECT [DISNCT] {*, column [alias],...}
 FROM table
