@@ -1,0 +1,7 @@
+1- design ER diagram
+2- schema --> table of each attribute and it's type and it's constraints
+called relational model
+3- decumentation of ER diagram
+every table described in on table
+4- scripts to design data base sql codes
+5- gui to do query of database
