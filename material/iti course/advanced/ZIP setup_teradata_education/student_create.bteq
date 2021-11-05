@@ -1,0 +1,762 @@
+/* as Teradata_Education!!!! */
+/*
+.logon demotdat/Teradata_Education, educ;
+*/
+
+.run file = demo_logon_educ.bteq;
+
+DELETE DATABASE Customer_Service;
+
+DROP DATABASE Customer_Service;
+
+CREATE	DATABASE customer_service FROM Teradata_Education AS 
+	PERM	= 2500000
+;
+
+GRANT ALL ON Customer_Service to Teradata_Education;
+
+DATABASE Customer_Service;
+
+CREATE TABLE Contact (
+	contact_number INTEGER,
+	contact_name VARCHAR(30) NOT NULL,
+	area_code INTEGER NOT NULL,
+	phone INTEGER NOT NULL,
+	extension INTEGER,
+	last_call_date DATE NOT NULL
+) UNIQUE PRIMARY INDEX Contact_Index (contact_number);
+
+INSERT INTO Contact VALUES(8007,'Smith, Ginny',408,3792152,333,880805)
+;INSERT INTO Contact VALUES(8010,'Brayton, Connie',408,1112345,112,870721)
+;INSERT INTO Contact VALUES(8005,'Hughes, Jack',212,5432126,710,870805)
+;INSERT INTO Contact VALUES(8001,'Leblanc, James',805,2213456,221,870801)
+;INSERT INTO Contact VALUES(8008,'Torres, Alison',802,5487890,444,880814)
+;INSERT INTO Contact VALUES(8015,'Dibble, Nancy',602,2713387,652,880809)
+;
+
+
+CREATE TABLE Customer (
+	customer_number INTEGER,
+	customer_name CHAR(30) NOT NULL,
+	parent_customer_number INTEGER,
+	sales_employee_number INTEGER		
+) UNIQUE PRIMARY INDEX Customer_Index (customer_number);
+
+INSERT INTO Customer VALUES(9,'More Data Enterprise',NULL,1023)
+;INSERT INTO Customer VALUES(18,'Wall Street Connection',NULL,1023)
+;INSERT INTO Customer VALUES(11,'Hotel California',NULL,1015)
+;INSERT INTO Customer VALUES(8,'Colby Co.',NULL,1018)
+;INSERT INTO Customer VALUES(2,'Simple Instruments Co.',1,1015)
+;INSERT INTO Customer VALUES(13,'First American Bank',3,1023)
+;INSERT INTO Customer VALUES(4,'Sum Bank',3,1023)
+;INSERT INTO Customer VALUES(0,'Corporate Headquarters',NULL,NULL)
+;INSERT INTO Customer VALUES(6,'Liberty Tours',NULL,1023)
+;INSERT INTO Customer VALUES(3,'First American Bank',NULL,1023)
+;INSERT INTO Customer VALUES(7,'Cream of the Crop',NULL,1018)
+;INSERT INTO Customer VALUES(17,'East Coast Dating Service',NULL,1023)
+;INSERT INTO Customer VALUES(12,'Cheap Rentals',NULL,1018)
+;INSERT INTO Customer VALUES(10,'Graduates Job Service',NULL,1015)
+;INSERT INTO Customer VALUES(19,'More Data Enterprise',9,1015)
+;INSERT INTO Customer VALUES(14,'Metro Savings',NULL,1018)
+;INSERT INTO Customer VALUES(5,'Federal Bureau of Rules',NULL,1018)
+;INSERT INTO Customer VALUES(1,'A to Z Communications, Inc,',NULL,1015)
+;INSERT INTO Customer VALUES(16,'VIP Investments',3,1023)
+;INSERT INTO Customer VALUES(15,'Cates Modeling',NULL,1015)
+;INSERT INTO Customer VALUES(20,'Metro Savings',14,1018)
+;
+
+							
+CREATE TABLE Department (	
+	department_number INTEGER,
+	department_name CHAR(30) NOT NULL,
+	budget_amount DECIMAL(10,2),
+	manager_employee_number INTEGER
+) UNIQUE PRIMARY INDEX Department_Index (department_number);
+
+INSERT INTO Department VALUES(100,'president',400000.00,801)
+;INSERT INTO Department VALUES(600,'None',NULL,1099)
+;INSERT INTO Department VALUES(403,'education',932000.00,1005)
+;INSERT INTO Department VALUES(301,'research and development',465600.00,1005)
+;INSERT INTO Department VALUES(302,'product planning',226000.00,1016)
+;INSERT INTO Department VALUES(401,'customer support',982300.00,1003)
+;INSERT INTO Department VALUES(201,'technical operations',293800.00,1025)
+;INSERT INTO Department VALUES(402,'software support',308000.00,1011)
+;INSERT INTO Department VALUES(501,'marketing sales',308000.00,1017)
+;
+
+
+CREATE TABLE Employee (
+	employee_number INTEGER,
+	manager_employee_number INTEGER,
+	department_number INTEGER,
+	job_code INTEGER,
+	last_name CHAR(20) NOT NULL,
+	first_name VARCHAR(30) NOT NULL,
+	hire_date DATE NOT NULL,
+	birthdate DATE NOT NULL,
+	salary_amount DECIMAL(10,2) NOT NULL
+) UNIQUE PRIMARY INDEX Employee_Index (employee_number);
+
+INSERT INTO Employee VALUES (1008,1019,301,312102,'Kanieski','Carol',770201,580517,29250.00)
+;INSERT INTO Employee VALUES (1010,1003,401,412101,'Rogers','Frank',770301,350423,46000.00)
+;INSERT INTO Employee VALUES (1014,1011,402,422101,'Crane','Robert',780115,600704,24500.00)
+;INSERT INTO Employee VALUES (1006,1019,301,312101,'Stein','John',761015,531015,29450.00)
+;INSERT INTO Employee VALUES (1017,801,501,511100,'Runyon','Irene',780501,511110,66000.00)
+;INSERT INTO Employee VALUES (1003,801,401,411100,'Trader','James',760731,470619,37850.00)
+;INSERT INTO Employee VALUES (1019,801,301,311100,'Kubic','Ron',780801,421211,57700.00)
+;INSERT INTO Employee VALUES (1011,801,402,421100,'Daly','James',770315,491211,52500.00)
+;INSERT INTO Employee VALUES (1013,1003,401,412102,'Phillips','Charles',770401,630810,24500.00)
+;INSERT INTO Employee VALUES (1009,1005,403,432101,'Lombardo','Domingus',770201,451115,31000.00)
+;INSERT INTO Employee VALUES (1025,801,201,211100,'Short','Michael',790501,470707,34700.00)
+;INSERT INTO Employee VALUES (1024,1005,403,432101,'Brown','Allen',790501,540116,43700.00)
+;INSERT INTO Employee VALUES (1007,1005,403,432101,'Villegas','Arnando',770102,370131,49700.00)
+;INSERT INTO Employee VALUES (1005,801,403,431100,'Ryan','Loretta',761015,550910,31200.00)
+;INSERT INTO Employee VALUES (1021,1025,201,222101,'Morrissey','Jim',781001,430429,38750.00)
+;INSERT INTO Employee VALUES (1020,1005,403,432101,'Charles','John',781001,490621,39500.00)
+;INSERT INTO Employee VALUES (1022,1003,401,412102,'Machado','Albert',790301,570714,32300.00)
+;INSERT INTO Employee VALUES (801,801,100,111100,'Trainer','I.B.',730301,450811,100000.00)
+;INSERT INTO Employee VALUES (1015,1017,501,512101,'Wilson','Edward',780301,570304,53625.00)
+;INSERT INTO Employee VALUES (1002,1003,401,413201,'Brown','Alan',760731,440809,43100.00)
+;INSERT INTO Employee VALUES (1004,1003,401,412101,'Johnson','Darlene',761015,460423,36300.00)
+;INSERT INTO Employee VALUES (1016,801,302,321100,'Rogers','Nora',780301,590904,56500.00)
+;INSERT INTO Employee VALUES (1018,1017,501,512101,'Ratzlaff','Larry',780715,540531,54000.00)
+;INSERT INTO Employee VALUES (1001,1003,401,412101,'Hoover','William',760618,500114,25525.00)
+;INSERT INTO Employee VALUES (1023,1017,501,512101,'Rabbit','Peter',790301,621029,26500.00)
+;INSERT INTO Employee VALUES (1012,1005,403,432101,'Hopkins','Paulene',770315,420218,37900.00)
+;
+
+/* This row should demonstrate the use of OUTER JOINs */
+
+INSERT INTO Employee VALUES (007,NULL,6,666,'Clinton','Bill',920201 ,450517 ,1000000.00);
+
+/* this row should retrun a NULL department */
+
+INSERT INTO Employee VALUES (0815,NULL,NULL,NULL,'Bush','George W.',920201 ,450517 ,2000000.00);
+
+
+CREATE TABLE Employee_Phone (
+	employee_number INTEGER NOT NULL,
+	area_code INTEGER NOT NULL,
+	phone INTEGER NOT NULL,
+	extension INTEGER,
+	comment_line VARCHAR(72)
+);
+
+;INSERT INTO Employee_Phone VALUES(1008,213,3788092,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,202,5456187,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1003,213,3774534,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1014,213,8278777,442,NULL)
+;INSERT INTO Employee_Phone VALUES(1006,213,8278777,410,NULL)
+;INSERT INTO Employee_Phone VALUES(1017,213,8278777,425,NULL)
+;INSERT INTO Employee_Phone VALUES(1019,213,8278777,418,NULL)
+;INSERT INTO Employee_Phone VALUES(1011,213,8278777,422,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,213,8278777,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1014,213,2528809,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1006,213,3716087,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1017,213,9231070,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1019,213,2640855,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1011,213,3549138,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1008,213,8278777,429,NULL)
+;INSERT INTO Employee_Phone VALUES(1003,213,8278777,401,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,202,3239119,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1007,213,2274764,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1005,213,2514189,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1013,213,8278777,411,NULL)
+;INSERT INTO Employee_Phone VALUES(1025,213,8278777,429,NULL)
+;INSERT INTO Employee_Phone VALUES(1024,213,8278777,417,NULL)
+;INSERT INTO Employee_Phone VALUES(1021,213,8278777,428,NULL)
+;INSERT INTO Employee_Phone VALUES(1013,213,9857506,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,804,9230911,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1025,213,2964652,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1024,213,2724743,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1021,213,2659291,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1007,213,8278777,440,NULL)
+;INSERT INTO Employee_Phone VALUES(1005,213,8278777,415,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,313,4630300,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1002,213,2721606,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,212,7230101,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1022,213,8278777,416,NULL)
+;INSERT INTO Employee_Phone VALUES(801,213,8278777,100,NULL)
+;INSERT INTO Employee_Phone VALUES(1015,213,8278777,436,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,312,990988,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1022,213,4982012,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1018,202,3239119,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1015,213,3012906,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,212,7232121,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1002,213,8278777,439,NULL)
+;INSERT INTO Employee_Phone VALUES(1018,804,2989791,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1015,415,4491225,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1023,212,7232121,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,804,4563000,370,NULL)
+;INSERT INTO Employee_Phone VALUES(1016,213,8278777,412,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,609,5591011,213,NULL)
+;INSERT INTO Employee_Phone VALUES(1016,213,2925224,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1015,415,9237892,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1023,212,8283747,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,804,4563000,375,NULL)
+;INSERT INTO Employee_Phone VALUES(1012,213,8278777,418,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,609,5591011,224,NULL)
+;INSERT INTO Employee_Phone VALUES(1010,312,5692122,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1012,213,9788422,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,2412021,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1023,609,5591011,213,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,609,5591011,225,NULL)
+;INSERT INTO Employee_Phone VALUES(1009,213,2482619,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,3563560,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,609,5785781,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,213,2872019,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,212,5786099,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1009,213,8278777,413,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,6567000,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,919,9789000,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1020,213,8278777,433,NULL)
+;INSERT INTO Employee_Phone VALUES(1020,213,2248513,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,4491221,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,617,7567676,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,4491225,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,212,8282828,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,4491244,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,718,2243283,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,9234864,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1004,212,4909190,NULL,NULL)
+;INSERT INTO Employee_Phone VALUES(1001,415,9237892,NULL,NULL)
+;
+
+
+CREATE TABLE Job (
+	job_code INTEGER,
+	description VARCHAR(40) NOT NULL,
+	hourly_billing_rate DECIMAL (4,2),
+	hourly_cost_rate DECIMAL(4,2)
+) UNIQUE PRIMARY INDEX Job_Index (job_code);
+
+;INSERT INTO Job VALUES(312101,'Software-Engineer',.00,.00)
+;INSERT INTO Job VALUES(432101,'Instructor',.00,.00)
+;INSERT INTO Job VALUES(413201,'Dispatcher',.00,.00)
+;INSERT INTO Job VALUES(111100,'Corporate President',.00,.00)
+;INSERT INTO Job VALUES(421100,'Manager Software Support',.00,.00)
+;INSERT INTO Job VALUES(104201,'Electronic Assembler',.00,.00)
+;INSERT INTO Job VALUES(312102,'Hardware Engineer',.00,.00)
+;INSERT INTO Job VALUES(321100,'Manager - Product Planning',.00,.00)
+;INSERT INTO Job VALUES(412101,'Field Engineer',.00,.00)
+;INSERT INTO Job VALUES(322101,'Planning Specialist',.00,.00)
+;INSERT INTO Job VALUES(511100,'Manager - Marketing Sales',.00,.00)
+;INSERT INTO Job VALUES(431100,'Manager - Education',.00,.00)
+;INSERT INTO Job VALUES(311100,'Manager - Reasearch and Development',.00,.00)
+;INSERT INTO Job VALUES(411100,'Manager - Customer Support',.00,.00)
+;INSERT INTO Job VALUES(104202,'Mechanical Assembler',.00,.00)
+;INSERT INTO Job VALUES(412102,'Product Specialist',.00,.00)
+;INSERT INTO Job VALUES(512101,'Sales Rep',.00,.00)
+;INSERT INTO Job VALUES(412103,'System Support Analyst',.00,.00)
+;INSERT INTO Job VALUES(222101,'System Analyst',.00,.00)
+;INSERT INTO Job VALUES(422101,'Software Analyst',.00,.00)
+;
+
+
+CREATE TABLE Location(
+	location_number INTEGER,
+	customer_number INTEGER NOT NULL,
+	first_address_line CHAR(30) NOT NULL,
+	city VARCHAR(30) NOT NULL,
+	state CHAR(15) NOT NULL,
+	zip_code INTEGER NOT NULL,
+	second_address_line CHAR(30),
+	third_address_line CHAR(30)
+) UNIQUE PRIMARY INDEX Location_Index (location_number);
+
+;INSERT INTO Location VALUES (5000002,2,'49 Fourth St','San Francisco','California',941031066, NULL, NULL)
+;INSERT INTO Location VALUES (34000009,9,'4400 Greenwood Rd','Wilmington','NC',284031199, NULL, NULL)
+;INSERT INTO Location VALUES (33000018,18,'105 Time Square','New York City','New York',105082682, NULL, NULL)
+;INSERT INTO Location VALUES (5000011,11,'770 Hotel Dr','Menlo Park','California',940585151, NULL, NULL)
+;INSERT INTO Location VALUES (22000013,13,'1059 Kings Rd','Boston','Massachusetts',12104091, NULL, NULL)
+;INSERT INTO Location VALUES (31000004,4,'55 Madison Av','Trenton','New Jersey',123419199, NULL, NULL)
+;INSERT INTO Location VALUES (23000008,8,'1100 State St','Detroit','MI',484107888, NULL, NULL)
+;INSERT INTO Location VALUES (5000000,0,'1294 Jefferson Blvd','Los Angeles','California',951604032, NULL, NULL)
+;INSERT INTO Location VALUES (33000006,6,'10 River Rd','Schenectady','New York',123016166, NULL, NULL)
+;INSERT INTO Location VALUES (33000003,3,'10366 25th St','New York City','New York',105293045, NULL, NULL)
+;INSERT INTO Location VALUES (5000019,19,'567 El Camino Real','San Mateo','California',942153219, NULL, NULL)
+;INSERT INTO Location VALUES (47000007,7,'4035 South 35th Av','Arlington','Virginia',222061016, NULL, NULL)
+;INSERT INTO Location VALUES (33000017,17,'4001 Harbor Blvd','Brooklyn','New York',105431915, NULL, NULL)
+;INSERT INTO Location VALUES (14000012,12,'510 Benton Av','Chicago','Illinois',606483930, NULL, NULL)
+;INSERT INTO Location VALUES (5000010,10,'5171 El Camino Real','Palo Alto','California',94071, NULL, NULL)
+;INSERT INTO Location VALUES (47000014,14,'1690 Miller Av','Richmond','Virginia',223104121, NULL, NULL)
+;INSERT INTO Location VALUES (9000005,5,'1 Lincoln Square','Washington','DC',156075555, NULL, NULL)
+;INSERT INTO Location VALUES (5000001,1,'101 Middlefield Rd','Palo Alto','California',951604032, NULL, NULL)
+;INSERT INTO Location VALUES (33000016,16,'2255 16th Av','New York City','New York',105293033, NULL, NULL)
+;INSERT INTO Location VALUES (5000015,15,'687 Culver Blvd','Culver City','California',900513965, NULL, NULL)
+;INSERT INTO Location VALUES (14000020,20,'876 Winston St','Chicago','Illinois',606316166, NULL, NULL)
+;
+
+CREATE TABLE Location_Employee (
+	location_number INTEGER NOT NULL,
+	employee_number INTEGER NOT NULL
+);
+
+;INSERT INTO Location_Employee VALUES(9000005,1010)
+;INSERT INTO Location_Employee VALUES(5000001,1001)
+;INSERT INTO Location_Employee VALUES(33000006,1004)
+;INSERT INTO Location_Employee VALUES(47000007,1010)
+;INSERT INTO Location_Employee VALUES(5000002,1001)
+;INSERT INTO Location_Employee VALUES(22000013,1004)
+;INSERT INTO Location_Employee VALUES(23000008,1010)
+;INSERT INTO Location_Employee VALUES(5000010,1001)
+;INSERT INTO Location_Employee VALUES(33000017,1004)
+;INSERT INTO Location_Employee VALUES(14000012,1010)
+;INSERT INTO Location_Employee VALUES(5000011,1001)
+;INSERT INTO Location_Employee VALUES(33000018,1004)
+;INSERT INTO Location_Employee VALUES(47000014,1010)
+;INSERT INTO Location_Employee VALUES(5000015,1001)
+;INSERT INTO Location_Employee VALUES(33000016,1004)
+;INSERT INTO Location_Employee VALUES(14000020,1010)
+;INSERT INTO Location_Employee VALUES(33000019,1001)
+;INSERT INTO Location_Employee VALUES(34000009,1004)
+;INSERT INTO Location_Employee VALUES(310000,1004)
+;INSERT INTO Location_Employee VALUES(33000003,1004)
+;
+
+CREATE TABLE Location_Phone (
+	location_number INTEGER,
+	area_code INTEGER NOT NULL,
+	phone INTEGER NOT NULL,
+	extension INTEGER,
+	description VARCHAR(40) NOT NULL,
+	comment_line VARCHAR(32000)
+);
+
+
+;INSERT INTO Location_Phone VALUES(23000008,313,4630300,NULL,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(33000018,212,4909190,NULL,'Tom-Sellers',NULL)
+;INSERT INTO Location_Phone VALUES(5000000,213,8278777,101,'Corporate President',NULL)
+;INSERT INTO Location_Phone VALUES(33000006,212,5786099,NULL,'Small office',NULL)
+;INSERT INTO Location_Phone VALUES(22000013,617,7567676,NULL,'Computer Room',NULL)
+;INSERT INTO Location_Phone VALUES(14000012,312,9880988,,'Tom Thumb',NULL)
+;INSERT INTO Location_Phone VALUES(5000010,415,2412021,NULL,'Alice Hamm',NULL)
+;INSERT INTO Location_Phone VALUES(47000014,804,4563000,370,'Alan Monday',NULL)
+;INSERT INTO Location_Phone VALUES(5000011,415,3563560,NULL,'J.R. Stern',NULL)
+;INSERT INTO Location_Phone VALUES(5000019,415,6567000,NULL,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(5000002,415,9237892,NULL,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(22000013,617,7562918,NULL,'System Manager',NULL)
+;INSERT INTO Location_Phone VALUES(33000003,212,7230101,NULL,'Computer Room',NULL)
+;INSERT INTO Location_Phone VALUES(31000004,609,5591011,213,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(47000014,804,4563000,375,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(14000020,312,5692122,NULL,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(5000015,213,2872019,NULL,'Charles Cates',NULL)
+;INSERT INTO Location_Phone VALUES(33000017,718,2243283,NULL,'various contacts',NULL)
+;INSERT INTO Location_Phone VALUES(33000003,212,7232121,NULL,'System Manager',NULL)
+;INSERT INTO Location_Phone VALUES(9000005,202,3239119,NULL,'Switchboard',NULL)
+;INSERT INTO Location_Phone VALUES(31000004,609,5591011,224,'System Manager',NULL)
+;INSERT INTO Location_Phone VALUES(14000020,312,5692136,NULL,'System Manager',NULL)
+;INSERT INTO Location_Phone VALUES(33000016,212,8282828,NULL,'Andy Moore',NULL)
+;INSERT INTO Location_Phone VALUES(34000009,919,9789000,NULL,'Receptionist',NULL)
+;INSERT INTO Location_Phone VALUES(31000004,609,5591011,225,'Computer Room',NULL)
+;INSERT INTO Location_Phone VALUES(5000001,415,4491221,NULL,'Fes office',NULL)
+;INSERT INTO Location_Phone VALUES(47000007,804,9230911,NULL,'Switchboard',NULL)
+;INSERT INTO Location_Phone VALUES(34000009,919,9789000,601,'John Moore',NULL)
+;INSERT INTO Location_Phone VALUES(5000001,415,4491225,NULL,'System Manager',NULL)
+;INSERT INTO Location_Phone VALUES(5000001,415,4491244,NULL,'Secretary',NULL)
+;
+
+CREATE TABLE salestbl
+     (storeid 	INTEGER,                                     
+      prodid 	CHAR(1), 
+      sales 		DECIMAL(9,2)
+     )
+;
+
+INSERT INTO salestbl VALUES(1001,'A',100000.00)   
+;INSERT INTO salestbl VALUES(1001,'C',60000.00)
+;INSERT INTO salestbl VALUES(1001,'D',35000.00)   
+;INSERT INTO salestbl VALUES(1001,'F',150000.00)   
+;INSERT INTO salestbl VALUES(1002,'A',40000.00)
+;INSERT INTO salestbl VALUES(1002,'C',35000.00)
+;INSERT INTO salestbl VALUES(1002,'D',25000.00)
+;INSERT INTO salestbl VALUES(1003,'A',30000.00)
+;INSERT INTO salestbl VALUES(1003,'B',65000.00)
+;INSERT INTO salestbl VALUES(1003,'C',20000.00)
+;INSERT INTO salestbl VALUES(1003,'D',50000.00)
+;
+                              
+                               
+                               
+DELETE DATABASE cs_views;
+
+DROP DATABASE cs_views;
+
+CREATE	DATABASE cs_views AS 
+	PERM	= 0
+;
+
+GRANT	SELECT,
+	INSERT,
+	DELETE,
+	UPDATE,
+	EXECUTE
+ON 	Customer_Service
+TO	CS_Views
+	WITH GRANT OPTION
+;
+
+REPLACE VIEW CS_Views.emp
+(
+	 emp
+	,mgr
+	,dept
+	,job
+	,lst_nm
+	,frst_nm
+	,hire
+	,birth
+	,sal
+)
+AS
+SELECT
+	 employee_number
+	,manager_employee_number
+	,department_number
+	,job_code
+	,last_name
+	,first_name
+	,hire_date
+	,birthdate
+	,salary_amount
+FROM Customer_Service.employee
+;
+
+REPLACE VIEW CS_Views.Contact
+AS
+SELECT	*
+FROM Customer_Service.Contact
+;
+
+REPLACE VIEW CS_Views.Customer
+AS
+SELECT	*
+FROM Customer_Service.Customer
+;
+
+REPLACE VIEW CS_Views.Department
+AS
+SELECT	*
+FROM Customer_Service.Department
+;
+
+REPLACE VIEW CS_Views.Employee
+AS
+SELECT	*
+FROM Customer_Service.Employee
+;
+
+REPLACE VIEW CS_Views.Employee_Phone
+AS
+SELECT	*
+FROM Customer_Service.Employee_Phone
+;
+
+REPLACE VIEW CS_Views.Job
+AS
+SELECT	*
+FROM Customer_Service.Job
+;
+
+REPLACE VIEW CS_Views.Location
+AS
+SELECT	*
+FROM Customer_Service.Location
+;
+
+REPLACE VIEW CS_Views.Location_Employee
+AS
+SELECT	*
+FROM Customer_Service.Location_Employee
+;
+
+REPLACE VIEW CS_Views.Location_Phone
+AS
+SELECT	*
+FROM Customer_Service.Location_Phone
+;
+
+REPLACE VIEW CS_Views.salestbl
+AS
+SELECT	*
+FROM Customer_Service.salestbl
+;
+
+
+/*
+	clean up students 
+*/
+
+DELETE USER student01;
+
+DELETE USER student02;
+DELETE USER student03;
+DELETE USER student04;
+DELETE USER student05;
+DELETE USER student06;
+DELETE USER student07;
+DELETE USER student08;
+DELETE USER student09;
+DELETE USER student10;
+DELETE USER student11;
+DELETE USER student12;
+/**/
+
+DROP USER student01;
+
+DROP USER student02;
+DROP USER student03;
+DROP USER student04;
+DROP USER student05;
+DROP USER student06;
+DROP USER student07;
+DROP USER student08;
+DROP USER student09;
+DROP USER student10;
+DROP USER student11;
+DROP USER student12;
+/**/
+
+/*create student users
+	usually we choose 2.5 MB per Student, but because of technology advantages
+	we may now use 25 MB per student
+*/
+
+DROP DATABASE students;
+
+CREATE	DATABASE students AS 	
+	PERM	=      500000000
+	SPOOL =      500000000
+	TEMPORARY =  50000000
+;
+
+DROP PROFILE student_profile
+;
+
+
+CREATE PROFILE student_profile
+AS
+	DEFAULT DATABASE = cs_views
+	SPOOL = 50000000
+	TEMPORARY = 10000000
+;
+
+DROP ROLE student_role
+;
+
+CREATE ROLE student_role
+;
+
+
+GRANT	SELECT
+ON	customer_service
+--TO ALL	students
+TO student_role
+;
+
+
+GRANT	SELECT,
+	EXECUTE
+ON 	CS_Views
+--TO ALL	students
+TO student_role
+;
+
+/*for convenience, if possible!!*/
+GRANT	SELECT 
+	ON dbc 
+--	TO ALL students
+TO student_role
+;
+
+
+CREATE USER student01 FROM students AS 
+	PERM	= 25000000 
+	PASSWORD = student01
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student02 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student02
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student03 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student03
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student04 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student04
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student05 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student05
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student06 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student06
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student07 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student07
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student08 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student08
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student09 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student09
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student10 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student10
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student11 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student11
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+
+CREATE USER student12 FROM students AS 
+	PERM	= 25000000
+	PASSWORD= student12
+	DEFAULT ROLE = student_role
+	PROFILE = student_profile
+;
+/**/
+/*
+CREATE USER student13 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student13,
+	Default Database = CS_Views
+;
+
+CREATE USER student14 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student14,
+	Default Database = CS_Views
+;
+
+CREATE USER student15 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student15,
+	Default Database = CS_Views
+;
+
+CREATE USER student16 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student16,
+	Default Database = CS_Views
+;
+
+CREATE USER student17 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student17,
+	Default Database = CS_Views
+;
+
+CREATE USER student18 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student18,
+	Default Database = CS_Views
+;
+
+
+CREATE USER student19 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student19,
+	Default Database = CS_Views
+;
+
+CREATE USER student20 FROM students AS 
+	PERM	= 25000000, 
+	PASSWORD= student20,
+	Default Database = CS_Views
+;
+*/
+
+
+
+
+
+
+grant user on student01 to student01;
+
+grant user on student02 to student02;
+grant user on student03 to student03;
+grant user on student04 to student04;
+grant user on student05 to student05;
+grant user on student06 to student06;
+grant user on student07 to student07;
+grant user on student08 to student08;
+grant user on student09 to student09;
+grant user on student10 to student10;
+grant user on student11 to student11;
+grant user on student12 to student12;
+/**/
+
+
+grant profile  to student01;
+
+grant profile  to student02;
+grant profile  to student03;
+grant profile  to student04;
+grant profile  to student05;
+grant profile  to student06;
+grant profile  to student07;
+grant profile  to student08;
+grant profile  to student09;
+grant profile  to student10;
+grant profile  to student11;
+grant profile  to student12;
+/**/
+
+grant role  to student01;
+
+grant role  to student02;
+grant role  to student03;
+grant role  to student04;
+grant role  to student05;
+grant role  to student06;
+grant role  to student07;
+grant role  to student08;
+grant role  to student09;
+grant role  to student10;
+grant role  to student11;
+grant role  to student12;
+/**/
+
+.quit;
+
+
+

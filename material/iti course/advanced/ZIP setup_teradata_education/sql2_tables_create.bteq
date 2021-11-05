@@ -1,0 +1,190 @@
+/*
+.logon teradata_education,educ;
+*/
+
+.run file = demo_logon_educ.bteq;
+
+DATABASE customer_service;
+
+CREATE TABLE	salestbl
+	(storeid INTEGER
+	,prodid  CHAR(1)
+	,sales	DECIMAL(9,2))
+;
+
+INSERT INTO salestbl (1003, 'C',20000);
+INSERT INTO salestbl (1003, 'A',30000);
+INSERT INTO salestbl (1003, 'D',50000);
+INSERT INTO salestbl (1002, 'C',35000);
+INSERT INTO salestbl (1002, 'D',25000);
+INSERT INTO salestbl (1002, 'A',40000);
+INSERT INTO salestbl (1001, 'C',60000);
+INSERT INTO salestbl (1001, 'A',100000);
+INSERT INTO salestbl (1001, 'D',35000);
+INSERT INTO salestbl (1003, 'B',65000);
+INSERT INTO salestbl (1001, 'F',150000);
+
+CREATE TABLE	daily_sales
+	(itemid	INTEGER
+	,salesdate	DATE
+	,sales	DECIMAL(9,2))
+;
+   
+INSERT INTO daily_sales values (10,980101,150);
+INSERT INTO daily_sales values (10,980102,200);
+INSERT INTO daily_sales values (10,980103,250);
+INSERT INTO daily_sales values (10,980105,350);
+INSERT INTO daily_sales values (10,980110,550);
+INSERT INTO daily_sales values (10,980121,150);
+INSERT INTO daily_sales values (10,980125,200);
+INSERT INTO daily_sales values (10,980131,100);
+INSERT INTO daily_sales values (10,980201,150);
+INSERT INTO daily_sales values (10,980203,250);
+INSERT INTO daily_sales values (10,980206,350);
+INSERT INTO daily_sales values (10,980217,550);
+INSERT INTO daily_sales values (10,980220,450);
+INSERT INTO daily_sales values (10,980227,350);
+
+INSERT INTO daily_sales values (10,970101,350);
+INSERT INTO daily_sales values (10,970102,100);
+INSERT INTO daily_sales values (10,970103,250);
+INSERT INTO daily_sales values (10,970105,350);
+INSERT INTO daily_sales values (10,970110,450);
+INSERT INTO daily_sales values (10,970121,250);
+INSERT INTO daily_sales values (10,970125,300);
+INSERT INTO daily_sales values (10,970131,100);
+INSERT INTO daily_sales values (10,970201,550);
+INSERT INTO daily_sales values (10,970203,350);
+INSERT INTO daily_sales values (10,970206,150);
+INSERT INTO daily_sales values (10,970217,250);
+INSERT INTO daily_sales values (10,970220,500);
+INSERT INTO daily_sales values (10,970227,150);
+
+INSERT INTO daily_sales values (10,980801,150);
+INSERT INTO daily_sales values (10,980802,200);
+INSERT INTO daily_sales values (10,980803,250);
+INSERT INTO daily_sales values (10,980804,250);
+INSERT INTO daily_sales values (10,980805,350);
+INSERT INTO daily_sales values (10,980810,550);
+INSERT INTO daily_sales values (10,980821,150);
+INSERT INTO daily_sales values (10,980825,200);
+INSERT INTO daily_sales values (10,980831,100);
+INSERT INTO daily_sales values (10,980901,150);
+INSERT INTO daily_sales values (10,980903,250);
+INSERT INTO daily_sales values (10,980906,350);
+INSERT INTO daily_sales values (10,980909,450);
+INSERT INTO daily_sales values (10,980917,550);
+INSERT INTO daily_sales values (10,980920,450);
+INSERT INTO daily_sales values (10,980927,350);
+
+
+INSERT INTO daily_sales values (10,970801,150);
+INSERT INTO daily_sales values (10,970802,200);
+INSERT INTO daily_sales values (10,970803,250);
+INSERT INTO daily_sales values (10,970805,350);
+INSERT INTO daily_sales values (10,970810,550);
+INSERT INTO daily_sales values (10,970821,150);
+INSERT INTO daily_sales values (10,970825,200);
+INSERT INTO daily_sales values (10,970831,100);
+INSERT INTO daily_sales values (10,970901,150);
+INSERT INTO daily_sales values (10,970903,250);
+INSERT INTO daily_sales values (10,970906,350);
+INSERT INTO daily_sales values (10,970917,550);
+INSERT INTO daily_sales values (10,970920,450);
+INSERT INTO daily_sales values (10,970927,350);
+
+CREATE TABLE	jan_sales
+	(itemid		INTEGER
+	,salesdate	DATE
+	,sales		DECIMAL(9,2))
+;
+   
+INSERT INTO jan_sales values (10,980101,150);
+INSERT INTO jan_sales values (10,980102,200);
+INSERT INTO jan_sales values (10,980103,250);
+INSERT INTO jan_sales values (10,980104,350);
+INSERT INTO jan_sales values (10,980105,550);
+INSERT INTO jan_sales values (10,980106,150);
+INSERT INTO jan_sales values (10,980107,200);
+INSERT INTO jan_sales values (10,980108,100);
+INSERT INTO jan_sales values (10,980109,150);
+INSERT INTO jan_sales values (10,980110,250);
+INSERT INTO jan_sales values (10,980111,350);
+INSERT INTO jan_sales values (10,980112,550);
+INSERT INTO jan_sales values (10,980113,450);
+INSERT INTO jan_sales values (10,980114,350);
+
+INSERT INTO jan_sales values (11,980101,350);
+INSERT INTO jan_sales values (11,980102,100);
+INSERT INTO jan_sales values (11,980103,450);
+INSERT INTO jan_sales values (11,980104,550);
+INSERT INTO jan_sales values (11,980105,250);
+INSERT INTO jan_sales values (11,980106,350);
+INSERT INTO jan_sales values (11,980107,200);
+INSERT INTO jan_sales values (11,980108,150);
+INSERT INTO jan_sales values (11,980109,250);
+INSERT INTO jan_sales values (11,980110,450);
+INSERT INTO jan_sales values (11,980111,550);
+INSERT INTO jan_sales values (11,980112,250);
+INSERT INTO jan_sales values (11,980113,350);
+INSERT INTO jan_sales values (11,980114,350);
+
+CREATE TABLE repair_time
+	(serial_number	INTEGER 
+	,product_desc	CHAR(8)
+	,start_time		TIMESTAMP(0)
+	,end_time		TIMESTAMP(0))
+UNIQUE PRIMARY INDEX (serial_number)
+;
+
+INSERT INTO repair_time VALUES (100,'TV',TIMESTAMP '2000-01-15 10:30:00',TIMESTAMP '2000-01-17 13:20:00');
+INSERT INTO repair_time VALUES (101,'TV',TIMESTAMP '2000-01-20 08:30:00',TIMESTAMP '2000-01-23 12:20:00');
+INSERT INTO repair_time VALUES (102,'TV',TIMESTAMP '2000-01-25 13:40:00',TIMESTAMP '2000-01-26 14:20:00');
+INSERT INTO repair_time VALUES (103,'TV',TIMESTAMP '2000-02-02 11:30:00',TIMESTAMP '2000-02-09 08:50:00');
+INSERT INTO repair_time VALUES (104,'TV',TIMESTAMP '2000-02-07 09:00:00',TIMESTAMP '2000-02-10 08:50:00');
+INSERT INTO repair_time VALUES (105,'TV',TIMESTAMP '2000-02-10 08:40:00',TIMESTAMP '2000-02-12 14:50:00');
+INSERT INTO repair_time VALUES (106,'TV',TIMESTAMP '2000-02-15 12:30:00',TIMESTAMP '2000-02-20 15:20:00');
+INSERT INTO repair_time VALUES (107,'TV',TIMESTAMP '2000-02-19 14:30:00',TIMESTAMP '2000-02-21 10:50:00');
+INSERT INTO repair_time VALUES (108,'TV',TIMESTAMP '2000-02-21 11:30:00',TIMESTAMP '2000-02-23 16:40:00');
+
+/* creating the one to one views */
+/*
+REPLACE VIEW CS_Views.Employee
+AS
+SELECT *
+FROM Customer_Service.Employee
+;
+ */
+
+
+DATABASE cs_views;
+
+CREATE VIEW	salestbl
+	AS
+	SELECT *
+	FROM	customer_service.salestbl
+;
+
+CREATE VIEW	daily_sales
+	AS
+	SELECT *
+	FROM	customer_service.daily_sales
+;
+
+CREATE VIEW	jan_sales
+	AS
+	SELECT *
+	FROM	customer_service.jan_sales
+;
+
+CREATE VIEW repair_time
+	AS
+	SELECT *
+	FROM	customer_service.repair_time
+;
+
+
+
+.quit
+
+
