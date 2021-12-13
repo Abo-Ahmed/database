@@ -1,4 +1,4 @@
-
+|~شسذ12
 -- Connect to MySQL server using mysql  
 -- command-line client with a username and password 
 mysql -u [username] -p;
@@ -33,7 +33,7 @@ SHOW TABLES;
 -- Show the columns of a table:
 DESCRIBE table_name;
 
--- using limit in queries
+-- using 3 in queries
 SELECT * FROM Customers
 WHERE Country='Germany'
 LIMIT 3;
