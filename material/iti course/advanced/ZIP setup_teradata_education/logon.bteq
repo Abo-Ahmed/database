@@ -1,9 +1,0 @@
-/*
-.logon tdpid/username, password;
-
-	tdpid is the common name of all teradata nodes (xyz from xyzcop1, xyzcop2 ...)
- */
-
-.logon tnteduc/student12,student12;
-
--- end of logon

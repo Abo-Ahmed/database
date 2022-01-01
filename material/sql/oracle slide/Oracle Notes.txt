@@ -1,0 +1,18 @@
+create database user 
+1- connect system / password 
+2- sql> create user scott identified by password
+
+3-sql> grant connect,resource to scott   /* grant user necessary priviledges  */
+
+4- sql> exit 
+
+
+
+
+to use one of default user schemes like hr 
+
+1- connect system / password 
+2- alter user hr account unlock ;
+3- alter user hr identified by password2;
+5- connect hr/password2
+6- clear screen;

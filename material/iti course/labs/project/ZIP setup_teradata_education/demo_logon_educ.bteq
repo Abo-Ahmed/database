@@ -1,0 +1,15 @@
+/* modify the following statement according to your machine 
+
+	the staement below is for the Teradat 12 demo !!!!
+
+.logon tdpid/teradata_education, educ;
+
+or
+
+.logon xx.yy.zz.ww/teradata_education, educ;
+
+*/
+
+.logon 127.0.0.1/teradata_education, educ;
+
+-- end of logon

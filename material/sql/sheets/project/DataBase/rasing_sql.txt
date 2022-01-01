@@ -1,0 +1,40 @@
+
+create table Donor ( 
+Donor_ID number(11) primary key,
+address varchar2(30) not null ,
+birth_date date 
+);
+
+
+create table Manager ( 
+Manager_ID number(11) primary key,
+Manager_name varchar2(30) not null,
+address varchar2(30) ,
+Salary number(11)
+
+);
+
+
+
+create table volunteer ( 
+volunteer_ID number(11) primary key,
+volunteer_name varchar2(30) not null,
+year_experience varchar2(30) ,
+manager_id number(11),
+FOREIGN KEY (manager_id) REFERENCES manager(manager_id)
+);
+
+
+
+create table Donation ( 
+donation_ID number(11) primary key,
+money number(11) not null ,
+pay_type varchar2(30) ,
+Donor_id number(11) ,
+volunteer_id number(11) ,
+FOREIGN KEY (Donor_id) REFERENCES Donor(Donor_id),
+FOREIGN KEY (volunteer_id) REFERENCES  Volunteer(volunteer_id)
+
+);
+
+

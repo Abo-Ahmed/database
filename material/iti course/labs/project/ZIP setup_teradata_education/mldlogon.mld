@@ -1,0 +1,2 @@
+.LOGTABLE student01.lab81_log;
+.logon demotdat/student01,student01;
