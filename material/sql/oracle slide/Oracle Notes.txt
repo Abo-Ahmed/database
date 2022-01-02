@@ -1,17 +1,18 @@
 
 
 -- create new database user using system account
-sql> CONNECT SYS AS SYSDBA
-sql> PASSWORD: FENG
-sql> CREATE USER feng IDENTIFIED BY benha
-sql> GRANT CONNECT,RESOURCE TO feng   /* grant user necessary priviledges  */
-sql> exit 
-sql> CONNECT FENG/BENHA
+sql> CONNECT SYS AS SYSDBA;
+sql> PASSWORD: FENG;
 
+-- create new account
+sql> CREATE USER feng IDENTIFIED BY benha;
+sql> GRANT CONNECT,RESOURCE TO feng;   /* grant user necessary priviledges  */
 
 -- to use one of default user schemes like hr 
-sql> connect system / password 
-sql> alter user hr account unlock ;
-sql> alter user hr identified by password2;
-sql> connect hr/password2
-sql> clear screen;
+sql> ALTER USER hr ACCOUNT UNLOCK ;
+sql> ALTER USER hr IDENTIFIED BY FENG;
+
+sql> EXIT;
+sql> CONNECT FENG/BENHA;
+sql> CLEAR SCREEN;
+
