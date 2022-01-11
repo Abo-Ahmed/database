@@ -1,4 +1,5 @@
 
+-- setup.exe from OracleXE112_Win64
 
 -- create new database user using system account
 sql> CONNECT SYS AS SYSDBA;
