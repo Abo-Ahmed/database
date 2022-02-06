@@ -182,6 +182,7 @@ nvl(  nvl(COMMISSION_PCT,MANAGER_ID), SALARY ) --nested nvl equal to COALESCE
 FROM EMPLOYEES;
 ------------------------------------------------------------------------------------------------------------
 --9 case statment
+-- CASE is better than DECODE and used in ANSI SQL
 
 SELECT first_name, job_id, salary,
        CASE job_id WHEN 'IT_PROG'  THEN  1.10*salary
