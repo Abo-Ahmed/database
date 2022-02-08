@@ -1,0 +1,455 @@
+--lets execute this query that show  EMPLOYEE_ID , first_name, DEPARTMENT_ID from table employees
+--note that DEPARTMENT_ID fk to table DEPARTMENTs 
+SELECT EMPLOYEE_ID , first_name, DEPARTMENT_ID
+FROM EMPLOYEES;
+
+--and this query show DEPARTMENT_ID, DEPARTMENT_NAME  form DEPARTMENTs
+SELECT DEPARTMENT_ID, DEPARTMENT_NAME 
+FROM DEPARTMENTS;
+
+--if you try to display data from multiple tables without join, this called  cartesian product
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+DEPARTMENTS.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+ORDER BY EMPLOYEE_ID;
+
+
+--the join will be like this and this called Equijoins or simple join or inner join
+
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+where EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+
+--using additional conditions
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID
+and EMPLOYEES.DEPARTMENT_ID >40
+ORDER BY EMPLOYEE_ID;
+
+--using table alias
+SELECT 
+EMP.EMPLOYEE_ID , 
+EMP.FIRST_NAME, 
+EMP.DEPARTMENT_ID, 
+dept.DEPARTMENT_NAME
+FROM EMPLOYEES EMP ,
+DEPARTMENTS DEPT
+WHERE emp.DEPARTMENT_ID=dept.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+
+--join more than 2 tables
+SELECT 
+EMP.EMPLOYEE_ID , 
+EMP.FIRST_NAME, 
+emp.DEPARTMENT_ID, 
+DEPT.DEPARTMENT_NAME,
+DEPT.location_id,
+loc.city
+FROM 
+EMPLOYEES EMP ,
+DEPARTMENTS DEPT,
+locations loc
+WHERE EMP.DEPARTMENT_ID=DEPT.DEPARTMENT_ID
+and dept.location_id=loc.location_id
+ORDER BY EMPLOYEE_ID;
+
+
+
+
+--we want to know what is nonEquijoins
+--lets create the table, the creation of table will be discussed in details later 
+CREATE TABLE JOB_GRADES 
+(
+ GRADE_LEVEL VARCHAR2(3),
+ LOWEST_SAL NUMBER,
+ HIGHEST_SAL NUMBER
+ );
+
+--here we insert the records for this table 
+ insert into JOB_GRADES (GRADE_LEVEL, LOWEST_SAL,HIGHEST_SAL)
+ values ('A',1000, 2999);
+ insert into JOB_GRADES (GRADE_LEVEL, LOWEST_SAL,HIGHEST_SAL)
+ values ('B',3000, 5999);
+ insert into JOB_GRADES (GRADE_LEVEL, LOWEST_SAL,HIGHEST_SAL)
+ values ('C',6000, 9999);
+ insert into JOB_GRADES (GRADE_LEVEL, LOWEST_SAL,HIGHEST_SAL)
+ values ('D',10000, 14999);
+ insert into JOB_GRADES (GRADE_LEVEL, LOWEST_SAL,HIGHEST_SAL)
+ values ('E',15000, 24999);
+ insert into JOB_GRADES (GRADE_LEVEL, LOWEST_SAL,HIGHEST_SAL)
+ VALUES ('F',25000, 40000);
+ commit; 
+ 
+ select * from job_grades;
+ 
+ --this is the nonEquijoins, try to make join using another operators other than =
+ SELECT EMP.EMPLOYEE_ID, EMP.FIRST_NAME, EMP.SALARY, grades.grade_level
+ FROM
+ EMPLOYEES EMP ,
+ JOB_GRADES GRADES 
+ where EMP.salary between GRADES.lowest_sal and grades.highest_sal 
+ 
+ 
+SELECT EMP.EMPLOYEE_ID, EMP.FIRST_NAME, EMP.SALARY, grades.grade_level
+ FROM
+ EMPLOYEES EMP ,
+ JOB_GRADES GRADES 
+ WHERE EMP.SALARY >= GRADES.LOWEST_SAL 
+ and EMP.SALARY<=grades.highest_sal 
+--------------------------------------------------------------------------------------------------
+---before we learn outer join, let make this  Equijoin
+--u will find one missing employee
+
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+
+--outer join, case1
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID(+)
+ORDER BY EMPLOYEE_ID;
+
+---outer join, case2
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+DEPARTMENTS.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID(+)=DEPARTMENTS.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+
+--self join
+
+SELECT EMPLOYEE_ID, FIRST_NAME, MANAGER_ID
+FROM EMPLOYEES;
+
+--i want to display manager name, so it is self join
+
+SELECT 
+worker.EMPLOYEE_ID, 
+WORKER.FIRST_NAME, 
+WORKER.MANAGER_ID,
+manager.first_name
+FROM 
+EMPLOYEES WORKER,
+EMPLOYEES MANAGER
+WHERE WORKER.MANAGER_ID=MANAGER.EMPLOYEE_ID;
+
+SELECT 
+worker.EMPLOYEE_ID, 
+WORKER.FIRST_NAME, 
+WORKER.MANAGER_ID,
+manager.first_name
+FROM 
+EMPLOYEES WORKER,
+EMPLOYEES MANAGER
+WHERE WORKER.MANAGER_ID=MANAGER.EMPLOYEE_ID(+)
+
+--example
+/*
+Retrieve all the employees (employee id, first name, dept. id ) who’s salary >2500
+And display their department name, and department location and department city and country
+All employees should appear even if they have no department
+*/
+
+--the number of records should be like this
+--because the employees table is the main table 
+
+SELECT count(1) 
+FROM 
+EMPLOYEES
+WHERE  SALARY>2500;
+
+--now we detrmine the column we need to pick it
+--from EMPLOYEES we need employee_id, first_name,department_id
+--from departments we need department_name and location_id
+--form locations we need city and country_id
+--from countries try we need country_name
+
+SELECT EMP.EMPLOYEE_ID,EMP.FIRST_NAME,EMP.DEPARTMENT_ID,
+DEPT.DEPARTMENT_NAME , DEPT.LOCATION_ID,
+LOC.CITY,
+cont.country_name
+FROM
+EMPLOYEES EMP,
+DEPARTMENTS DEPT,
+LOCATIONS LOC ,
+COUNTRIES CONT
+WHERE EMP.DEPARTMENT_ID=DEPT.DEPARTMENT_ID(+)
+AND DEPT.LOCATION_ID=LOC.LOCATION_ID(+)
+AND LOC.COUNTRY_ID=CONT.COUNTRY_id(+)
+and SALARY>2500;
+
+
+
+--------part one  cross join-----------------
+--1 cartesian product in 1999 format
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+DEPARTMENTS.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES
+cross join
+DEPARTMENTS
+ORDER BY EMPLOYEE_ID;
+
+--2 cartesian product in old format  ( 1 and 2 are same  )
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+DEPARTMENTS.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+ORDER BY EMPLOYEE_ID;
+-------------------------------------------------------------------
+
+------- part two natural join ---------------------
+
+--3 natural join between DEPARTMENTS and LOCATIONS
+
+SELECT 
+DEPARTMENTS.DEPARTMENT_ID,
+DEPARTMENTS.DEPARTMENT_NAME,
+LOCATION_ID, --note you can not prefix table name in the match column
+LOCATIONS.city
+FROM
+DEPARTMENTS
+NATURAL JOIN LOCATIONS
+
+--4 you can make natural join using old format as equijoun ( 3 and 4 same)
+
+SELECT 
+DEPARTMENTS.DEPARTMENT_ID,
+DEPARTMENTS.DEPARTMENT_NAME,
+DEPARTMENTS.LOCATION_ID, --here you should put the prefix
+LOCATIONS.city
+FROM
+DEPARTMENTS,
+LOCATIONS
+WHERE DEPARTMENTS.LOCATION_ID=LOCATIONS.LOCATION_ID;
+
+--IF YOU TRY TO MAKE NATURAL JOIN BETWEEN EMPLOYEES AND DEPARTMENTS, THIS IS WRONG
+--because it will join 2 columns DEPARTMENT_ID and  MANAGER_ID 
+
+--5 use where in additional condition in NATURAL JOIN, then and if required  
+SELECT 
+DEPARTMENTS.DEPARTMENT_ID,
+DEPARTMENTS.DEPARTMENT_NAME,
+LOCATION_ID, --note you can not prefix table name in the match column
+LOCATIONS.city
+FROM
+DEPARTMENTS
+NATURAL JOIN LOCATIONS
+where DEPARTMENTS.DEPARTMENT_ID>20 --use where then and 
+
+------------------------------------------------------------------------------------
+
+---------- part three retriving records with USING-------------------- 
+--6 
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+DEPARTMENT_ID, --note you can not prefix table name in the match column
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES join
+DEPARTMENTS
+USING(DEPARTMENT_ID) -- only one column can be used
+ORDER BY EMPLOYEE_ID;
+
+--7 you can do query 6 with equijoin as follow
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+----------------------------------------------------
+
+-- Part four creaing join with the ON clause, this is better than natural join and using---- 
+--8  on
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+DEPARTMENTS.DEPARTMENT_ID, ---here prefix should be use 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES join
+DEPARTMENTS
+ON (EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID)
+-----where EMPLOYEE_ID=100
+ORDER BY EMPLOYEE_ID;
+
+--9 you can wirte query 8 as follow 
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+
+--also we can use on  for nonequijoin
+
+ SELECT EMP.EMPLOYEE_ID, EMP.FIRST_NAME, EMP.SALARY, grades.grade_level
+ FROM
+ EMPLOYEES EMP join 
+ JOB_GRADES GRADES 
+ ON EMP.SALARY BETWEEN GRADES.LOWEST_SAL AND GRADES.HIGHEST_SAL 
+ 
+ SELECT EMP.EMPLOYEE_ID, EMP.FIRST_NAME, EMP.SALARY, grades.grade_level
+ FROM
+ EMPLOYEES EMP ,
+ JOB_GRADES GRADES 
+ where EMP.salary between GRADES.lowest_sal and grades.highest_sal 
+
+--also you can  make self join by ( ON )
+SELECT 
+worker.EMPLOYEE_ID, 
+WORKER.FIRST_NAME, 
+WORKER.MANAGER_ID,
+manager.first_name
+FROM 
+EMPLOYEES WORKER join
+EMPLOYEES MANAGER
+on( WORKER.MANAGER_ID=MANAGER.EMPLOYEE_ID);
+
+SELECT 
+worker.EMPLOYEE_ID, 
+WORKER.FIRST_NAME, 
+WORKER.MANAGER_ID,
+manager.first_name
+FROM 
+EMPLOYEES WORKER,
+EMPLOYEES MANAGER
+WHERE WORKER.MANAGER_ID=MANAGER.EMPLOYEE_ID;
+
+--10 join 3 tables
+SELECT 
+EMP.EMPLOYEE_ID , 
+EMP.FIRST_NAME, 
+emp.DEPARTMENT_ID, 
+DEPT.DEPARTMENT_NAME,
+DEPT.location_id,
+loc.city
+FROM 
+EMPLOYEES EMP 
+join
+DEPARTMENTS DEPT
+on (EMP.DEPARTMENT_ID=DEPT.DEPARTMENT_ID )
+JOIN LOCATIONS LOC
+on ( DEPT.LOCATION_ID=LOC.LOCATION_ID)
+ORDER BY EMPLOYEE_ID;
+
+--11 you can do query 10 as follow
+
+SELECT 
+EMP.EMPLOYEE_ID , 
+EMP.FIRST_NAME, 
+emp.DEPARTMENT_ID, 
+DEPT.DEPARTMENT_NAME,
+DEPT.location_id,
+loc.city
+FROM 
+EMPLOYEES EMP ,
+DEPARTMENTS DEPT,
+locations loc
+WHERE EMP.DEPARTMENT_ID=DEPT.DEPARTMENT_ID
+AND DEPT.LOCATION_ID=LOC.LOCATION_ID
+ORDER BY EMPLOYEE_ID;
+----------------------------------------------------------------------------------------------------
+
+----------part five left outer join ------------
+--12  left outer join
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES
+left OUTER JOIN DEPARTMENTS
+on( EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID)
+ORDER BY EMPLOYEE_ID;
+
+--13 you can write query 12 as follow 
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID(+)
+ORDER BY EMPLOYEE_ID;
+--------------------------------
+
+---------part six right  outer join-----------------------
+--14 right  outer join
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES
+right OUTER JOIN DEPARTMENTS
+ON( EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID)
+ORDER BY EMPLOYEE_ID;
+
+--15 you can write query 14 as follow
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES,
+DEPARTMENTS
+WHERE EMPLOYEES.DEPARTMENT_ID(+)=DEPARTMENTS.DEPARTMENT_ID
+ORDER BY EMPLOYEE_ID;
+----------------------------------------------------
+
+----------part seven full outer join ---------------------------
+-- 16 full outer join 
+SELECT 
+EMPLOYEES.EMPLOYEE_ID , 
+EMPLOYEES.FIRST_NAME, 
+EMPLOYEES.DEPARTMENT_ID, 
+DEPARTMENTS.DEPARTMENT_NAME
+FROM EMPLOYEES
+FULL OUTER JOIN DEPARTMENTS
+ON( EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID)
+ORDER BY EMPLOYEE_ID;
