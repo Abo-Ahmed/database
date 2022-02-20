@@ -1,6 +1,12 @@
 
 -- setup.exe from OracleXE112_Win64
 
+-- tools to use
+oracle command line
+sql developer
+click charts 
+khalid khudiri course
+
 -- create new database user using system account
 sql> CONNECT SYS AS SYSDBA;
 sql> PASSWORD: FENG;
@@ -55,3 +61,5 @@ XE =
 
 -- to open all plugable databases
 alter PLUGGABLE DATABASE open;
+
+
